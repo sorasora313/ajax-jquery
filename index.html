@@ -7,15 +7,22 @@
   <title>Ajax</title>
 </head>
 <body>
+    <div id="news"></div>
   <script>
     var ajax = new XMLHttpRequest();
     ajax.open('GET','feed.json', true);
     ajax.onload = function(e){
       if (ajax.readyState === 4){
           if(ajax.status === 200){
-              var json = ajax.responseText;
-              console.log(json);
-          }
+              var json = JSON.parse(ajax.responseText);
+              var html = '<ul>';
+                for (var i=0; i<json.items.length; i++){
+                  html += '<li>' + json.items[i].title +'</li>';
+                }
+                html += '</ul>';
+              
+                document.getElementById('news').innerHTML = html;
+        }
       }
     }
     ajax.send(null);
